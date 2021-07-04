@@ -6,9 +6,9 @@ import './controls.style.css'
 
 const ControlBars = () => {
   return (
-    <div className="pprojector-controlbar">
+    <div className="projector-controlbar">
       <ProgressBarControl />
-      <div className="pprojector-controlbar__control">
+      <div className="projector-controlbar__control">
         <PlayingControl />
         <DurationControl />
       </div>

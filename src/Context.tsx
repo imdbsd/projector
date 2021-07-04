@@ -12,6 +12,7 @@ type State = {
   canPlay: boolean
   // video meta
   duration: number
+  timer: number
   // end of video meta
 }
 
@@ -27,6 +28,7 @@ const initialState: State = {
   canPlay: false,
   // video meta
   duration: 0,
+  timer: 0,
   // end of video meta
 }
 
@@ -37,6 +39,7 @@ const ProjectorProvider: React.FC<{src: string}> = (props) => {
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [canPlay, setCanPlay] = React.useState(false)
   const [duration, setDuration] = React.useState(0)
+  const [timer, setTimer] = React.useState(0)
   const toggleIsPlaying = React.useCallback(() => {
     setIsPlaying((cur) => !cur)
   }, [])
@@ -52,14 +55,24 @@ const ProjectorProvider: React.FC<{src: string}> = (props) => {
     setCanPlay(true)
   }, [])
 
+  const updateTime = React.useCallback(() => {
+    if (playerRef.current) {
+      setTimer(playerRef.current.currentTime)
+    }
+  }, [])
+
   React.useEffect(() => {
     if (playerRef.current) {
       const player = playerRef.current
       player.addEventListener('loadedmetadata', onMetaLoaded)
       player.addEventListener('loadeddata', onLoadedData)
+      player.addEventListener('timeupdate', updateTime)
+      player.addEventListener('seeking', updateTime)
       return () => {
         player.removeEventListener('loadedmetadata', onMetaLoaded)
         player.removeEventListener('loadeddata', onLoadedData)
+        player.removeEventListener('timeupdate', updateTime)
+        player.removeEventListener('seeking', updateTime)
       }
     }
   }, [])
@@ -77,6 +90,7 @@ const ProjectorProvider: React.FC<{src: string}> = (props) => {
           width: 640,
           canPlay,
           duration,
+          timer,
         }}
       >
         {props.children}

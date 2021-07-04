@@ -1,0 +1,12 @@
+{
+  "name": "@imdbsd/reflix",
+  "version": "0.0.1",
+  "description": "Web video player, inspired by Netflix",
+  "main": "index.js",
+  "author": "imdbsd",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "typescript": "^4.3.5"
+  }
+}

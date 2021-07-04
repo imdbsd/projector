@@ -2,17 +2,19 @@ import React from 'react'
 import {ComponentStory, ComponentMeta} from '@storybook/react'
 import videoTest from './stories/assets/video-test.mp4'
 
-import Reflix from './Reflix'
+import Projector from './Projector'
 
 export default {
-  title: 'Reflix/Player',
-  component: Reflix,
+  title: 'Projector/Player',
+  component: Projector,
   argTypes: {
     backgroundColor: {control: 'color'},
   },
-} as ComponentMeta<typeof Reflix>
+} as ComponentMeta<typeof Projector>
 
-const Template: ComponentStory<typeof Reflix> = (args) => <Reflix {...args} />
+const Template: ComponentStory<typeof Projector> = (args) => (
+  <Projector {...args} />
+)
 
 export const Default = Template.bind({})
 Default.args = {

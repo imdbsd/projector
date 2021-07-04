@@ -1,18 +1,10 @@
 import * as React from 'react'
+import {useProjector} from './Context'
 
-type Props = {
-  src: string
-  playerRef: React.MutableRefObject<HTMLVideoElement | null>
-  autoplay?: boolean
-  muted?: boolean
-  controls?: boolean
-}
-const Player = (props: Props) => {
-  const {src, playerRef} = props
-  const height = 320
-  const width = 640
+const Player = () => {
+  const {src, playerRef, height, width} = useProjector()
   return (
-    <video height={height} width={width} ref={playerRef}>
+    <video height={height} width={width} ref={playerRef} controls muted>
       <source src={src} />
     </video>
   )

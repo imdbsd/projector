@@ -1,6 +1,7 @@
 import * as React from 'react'
+import Context from './Context'
 import Player from './Player'
-import Controls from './Controls'
+import Controls from './Controls/ControlBars'
 
 type Props = {
   src: string
@@ -10,20 +11,20 @@ type Props = {
 }
 
 const Reflix = (props: Props) => {
-  const playerRef = React.useRef<HTMLVideoElement>(null)
-  console.log({playerRef})
   return (
-    <div
-      style={{
-        position: 'relative',
-        backgroundColor: '#000',
-        height: '320px',
-        width: '640px',
-      }}
-    >
-      <Player {...props} playerRef={playerRef} />
-      <Controls playerRef={playerRef} />
-    </div>
+    <Context src={props.src}>
+      <div
+        style={{
+          position: 'relative',
+          backgroundColor: '#000',
+          height: '320px',
+          width: '640px',
+        }}
+      >
+        <Player />
+        <Controls />
+      </div>
+    </Context>
   )
 }
 

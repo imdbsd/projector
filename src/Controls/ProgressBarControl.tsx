@@ -56,7 +56,7 @@ const ProgressBar = () => {
     [duration, player]
   )
 
-  const onMouseUp = React.useCallback(() => {
+  const disableDrag = React.useCallback(() => {
     isClickTrackRef.current = false
   }, [])
 
@@ -77,7 +77,8 @@ const ProgressBar = () => {
         className="pcontrol-progressbar__track"
         onClick={onClickTrack}
         onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
+        onMouseUp={disableDrag}
+        onMouseLeave={disableDrag}
         onMouseMove={onDragDot}
       >
         {bufferedProgress ? (

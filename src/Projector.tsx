@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Context from './Context'
+import {ProjectorProvider, ProjectorConsumer} from './Context'
 import Player from './Player'
 import Controls from './Controls/ControlBars'
 
@@ -10,22 +10,26 @@ type Props = {
   controls?: boolean
 }
 
-const Reflix = (props: Props) => {
+const Projector = (props: Props) => {
   return (
-    <Context src={props.src}>
-      <div
-        style={{
-          position: 'relative',
-          backgroundColor: '#000',
-          height: '320px',
-          width: '640px',
-        }}
-      >
-        <Player />
-        <Controls />
-      </div>
-    </Context>
+    <ProjectorProvider src={props.src}>
+      <ProjectorConsumer>
+        {(context) => (
+          <div
+            style={{
+              position: 'relative',
+              backgroundColor: '#000',
+              height: `${context.height}px`,
+              width: `${context.width}px`,
+            }}
+          >
+            <Player />
+            <Controls />
+          </div>
+        )}
+      </ProjectorConsumer>
+    </ProjectorProvider>
   )
 }
 
-export default Reflix
+export default Projector

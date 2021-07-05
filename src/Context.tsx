@@ -35,8 +35,9 @@ const initialState: State = {
 }
 
 const ProjectorContext = React.createContext(initialState)
+export const ProjectorConsumer = ProjectorContext.Consumer
 
-const ProjectorProvider: React.FC<{src: string}> = (props) => {
+export const ProjectorProvider: React.FC<{src: string}> = (props) => {
   const playerRef = React.useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [canPlay, setCanPlay] = React.useState(false)
@@ -122,5 +123,3 @@ const ProjectorProvider: React.FC<{src: string}> = (props) => {
 }
 
 export const useProjector = () => React.useContext(ProjectorContext)
-
-export default ProjectorProvider

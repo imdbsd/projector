@@ -4,9 +4,12 @@ import DurationControl from './DurationControl'
 import ProgressBarControl from './ProgressBarControl'
 import './controls.style.css'
 
-const ControlBars = () => {
+type Props = {
+  show?: boolean
+}
+const ControlBars: React.FC<Props> = (props) => {
   return (
-    <div className="projector-controlbar">
+    <div className={`projector-controlbar ${props.show ? 'show' : ''}`}>
       <ProgressBarControl />
       <div className="projector-controlbar__control">
         <PlayingControl />

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {ProjectorProvider, ProjectorConsumer} from './Context'
+import {ProjectorProvider, useProjector} from './Context'
 import Player from './Player'
 import Controls from './Controls/ControlBars'
 
@@ -10,25 +10,51 @@ type Props = {
   controls?: boolean
 }
 
-const Projector = (props: Props) => {
+const Projector = () => {
+  const {width, height, isPlaying} = useProjector()
+  const [showControl, setShowControl] = React.useState(true)
+
+  const showProjectorControl = React.useCallback(() => {
+    setShowControl(true)
+  }, [])
+  const hideProjectorControl = React.useCallback(() => {
+    if (isPlaying) {
+      setShowControl(false)
+    }
+  }, [isPlaying])
+
+  React.useEffect(() => {
+    if (showControl && isPlaying) {
+      const hideTimeOut = setTimeout(() => {
+        setShowControl(false)
+      }, 5000)
+      return () => {
+        clearTimeout(hideTimeOut)
+      }
+    }
+  }, [showControl, isPlaying])
+
   return (
-    <ProjectorProvider src={props.src}>
-      <ProjectorConsumer>
-        {(context) => (
-          <div
-            className="projector-wrapper"
-            style={{
-              height: `${context.height}px`,
-              width: `${context.width}px`,
-            }}
-          >
-            <Player />
-            <Controls />
-          </div>
-        )}
-      </ProjectorConsumer>
-    </ProjectorProvider>
+    <div
+      className="projector-wrapper"
+      style={{
+        height: `${height}px`,
+        width: `${width}px`,
+      }}
+      onMouseEnter={showProjectorControl}
+      onMouseMove={showProjectorControl}
+      onMouseLeave={hideProjectorControl}
+    >
+      <Player />
+      <Controls show={showControl} />
+    </div>
   )
 }
 
-export default Projector
+const ContextedProjector = (props: Props) => (
+  <ProjectorProvider src={props.src}>
+    <Projector />
+  </ProjectorProvider>
+)
+
+export default ContextedProjector

@@ -22,6 +22,7 @@ Default.args = {
   // src:
   //   'https://rs137ua.dood.video/u5kj62yxrthlsdgge6fwcisedutt2g6hwghhzpzycdfkhpksdahkwfhjqjva/p5wroxkiam~feocmWAStc?token=jkitiqqms1osjmwsqh8fg6hd&expiry=1625405825766',
   src: videoTest,
+  controls: true,
 }
 
 // export const Primary = Template.bind({});

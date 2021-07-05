@@ -4,6 +4,7 @@ import {useProjector} from '../Context'
 const ProgressBar = () => {
   const {duration, timer, buffereds, player} = useProjector()
   const trackBarRef = React.useRef<HTMLDivElement>(null)
+  const isClickTrackRef = React.useRef<boolean>(false)
   const progress = React.useMemo(() => (timer / duration) * 100, [
     duration,
     timer,
@@ -12,9 +13,9 @@ const ProgressBar = () => {
   const [buffered] = buffereds
   const bufferedProgress = buffered ? (buffered.end / duration) * 100 : 0
 
-  const onClickTrack = React.useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
-      if (trackBarRef.current && player) {
+  const computeMouseOnTimeStamp = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>, duration: number) => {
+      if (trackBarRef.current) {
         const track = trackBarRef.current
         // @ts-ignore fix type
         const target: HTMLDivElement = event.target
@@ -27,8 +28,42 @@ const ProgressBar = () => {
 
         const percentageOfClickedTrack =
           clickPosition > 0 ? (clickPosition / trackWidth) * 100 : 0
-        const clickedTimeStamp = (duration * percentageOfClickedTrack) / 100
+        return (duration * percentageOfClickedTrack) / 100
+      }
+      return 0
+    },
+    []
+  )
 
+  const onClickTrack = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      if (player) {
+        const clickedTimeStamp = computeMouseOnTimeStamp(event, duration)
+        player.currentTime = clickedTimeStamp
+      }
+    },
+    [duration, player]
+  )
+
+  const onMouseDown = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      isClickTrackRef.current = true
+      if (isClickTrackRef.current && player) {
+        const clickedTimeStamp = computeMouseOnTimeStamp(event, duration)
+        player.currentTime = clickedTimeStamp
+      }
+    },
+    [duration, player]
+  )
+
+  const onMouseUp = React.useCallback(() => {
+    isClickTrackRef.current = false
+  }, [])
+
+  const onDragDot = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      if (isClickTrackRef.current && player) {
+        const clickedTimeStamp = computeMouseOnTimeStamp(event, duration)
         player.currentTime = clickedTimeStamp
       }
     },
@@ -41,6 +76,9 @@ const ProgressBar = () => {
         ref={trackBarRef}
         className="pcontrol-progressbar__track"
         onClick={onClickTrack}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseMove={onDragDot}
       >
         {bufferedProgress ? (
           <div

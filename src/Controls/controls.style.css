@@ -63,7 +63,7 @@
   background-color: rgb(255 255 255 / 50%);
 }
 
-.pcontrol-progressbar__progress::after {
+.pcontrol-progressbar__progress::after {    
   content: ' ';
   display: block;
   height: 15px;

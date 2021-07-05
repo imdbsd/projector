@@ -23,3 +23,26 @@ Default.args = {
   //   'https://rs137ua.dood.video/u5kj62yxrthlsdgge6fwcisedutt2g6hwghhzpzycdfkhpksdahkwfhjqjva/p5wroxkiam~feocmWAStc?token=jkitiqqms1osjmwsqh8fg6hd&expiry=1625405825766',
   src: videoTest,
 }
+
+// export const Primary = Template.bind({});
+// Primary.args = {
+//   primary: true,
+//   label: 'Button',
+// };
+
+// export const Secondary = Template.bind({});
+// Secondary.args = {
+//   label: 'Button',
+// };
+
+// export const Large = Template.bind({});
+// Large.args = {
+//   size: 'large',
+//   label: 'Button',
+// };
+
+// export const Small = Template.bind({});
+// Small.args = {
+//   size: 'small',
+//   label: 'Button',
+// };

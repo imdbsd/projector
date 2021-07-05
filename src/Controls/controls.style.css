@@ -1,3 +1,8 @@
+.projector-wrapper {
+  position: relative;
+  background-color: #000;
+}
+
 .projector-controlbar {
   /* position: absolute; */
   bottom: 0;

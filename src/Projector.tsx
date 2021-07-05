@@ -16,9 +16,8 @@ const Projector = (props: Props) => {
       <ProjectorConsumer>
         {(context) => (
           <div
+            className="projector-wrapper"
             style={{
-              position: 'relative',
-              backgroundColor: '#000',
               height: `${context.height}px`,
               width: `${context.width}px`,
             }}

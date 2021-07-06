@@ -1,3 +1,3 @@
-import Reflix from './Reflix'
+import Projector from './Projector'
 
-export default Reflix
+export default Projector

@@ -13,6 +13,7 @@ type State = {
   // video meta
   duration: number
   timer: number
+  volume: number
   buffereds: Array<{start: number; end: number}>
   // end of video meta
 }
@@ -30,6 +31,7 @@ const initialState: State = {
   // video meta
   duration: 0,
   timer: 0,
+  volume: 1,
   buffereds: [],
   // end of video meta
 }
@@ -43,6 +45,7 @@ export const ProjectorProvider: React.FC<{src: string}> = (props) => {
   const [canPlay, setCanPlay] = React.useState(false)
   const [duration, setDuration] = React.useState(0)
   const [timer, setTimer] = React.useState(0)
+  const [volume, setVolume] = React.useState(1)
   const [buffereds, setBuffereds] = React.useState<
     Array<{start: number; end: number}>
   >([])
@@ -58,6 +61,10 @@ export const ProjectorProvider: React.FC<{src: string}> = (props) => {
 
   const onLoadedData = React.useCallback(() => {
     setCanPlay(true)
+    if (playerRef.current) {
+      const player = playerRef.current
+      setVolume(player.volume)
+    }
   }, [])
 
   const onUpdateTime = React.useCallback(() => {
@@ -85,6 +92,12 @@ export const ProjectorProvider: React.FC<{src: string}> = (props) => {
     }
   }, [])
 
+  const onVolumeChange = React.useCallback(() => {
+    if (playerRef.current) {
+      setVolume(playerRef.current.volume)
+    }
+  }, [])
+
   React.useEffect(() => {
     if (playerRef.current) {
       const player = playerRef.current
@@ -94,6 +107,7 @@ export const ProjectorProvider: React.FC<{src: string}> = (props) => {
       player.addEventListener('seeking', onUpdateTime)
       player.addEventListener('progress', onProgress)
       player.addEventListener('ended', onPlayerEnd)
+      player.addEventListener('volumechange', onVolumeChange)
       return () => {
         player.removeEventListener('loadedmetadata', onMetaLoaded)
         player.removeEventListener('loadeddata', onLoadedData)
@@ -101,6 +115,7 @@ export const ProjectorProvider: React.FC<{src: string}> = (props) => {
         player.removeEventListener('seeking', onUpdateTime)
         player.removeEventListener('progress', onProgress)
         player.removeEventListener('ended', onPlayerEnd)
+        player.removeEventListener('volumechange', onVolumeChange)
       }
     }
   }, [])
@@ -119,6 +134,7 @@ export const ProjectorProvider: React.FC<{src: string}> = (props) => {
           canPlay,
           duration,
           timer,
+          volume,
           buffereds,
         }}
       >

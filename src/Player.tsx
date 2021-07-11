@@ -4,7 +4,7 @@ import {useProjector} from './Context'
 const Player = () => {
   const {src, playerRef, height, width} = useProjector()
   return (
-    <video height={height} width={width} ref={playerRef}>
+    <video height={height} width={width} ref={playerRef} controls>
       <source src={src} />
     </video>
   )

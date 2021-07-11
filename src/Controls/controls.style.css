@@ -76,7 +76,7 @@
   background-color: rgb(255 255 255 / 50%);
 }
 
-.pcontrol-progressbar__progress::after {    
+.pcontrol-progressbar__progress::after {
   content: ' ';
   display: block;
   height: 15px;
@@ -92,5 +92,26 @@
 
 .pcontrol-progressbar:hover .pcontrol-progressbar__progress::after {
   opacity: 1;
+  transition: all 0.5s ease;
+}
+
+.pcontrol-audio {
+  display: flex;
+  align-items: center;
+}
+
+.pcontrol-audio__volume-range {
+  display: flex;
+  flex: 1;
+}
+
+.pcontrol-audio__volume-range input {
+  width: 0px;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.pcontrol-audio:hover .pcontrol-audio__volume-range input {
+  width: 100%;
   transition: all 0.5s ease;
 }

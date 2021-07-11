@@ -66,6 +66,10 @@ export const ProjectorProvider: React.FC<{src: string}> = (props) => {
     }
   }, [])
 
+  const onPlayerEnd = React.useCallback(() => {
+    setIsPlaying(false)
+  }, [])
+
   const onProgress = React.useCallback(() => {
     if (playerRef.current) {
       const player = playerRef.current
@@ -89,12 +93,14 @@ export const ProjectorProvider: React.FC<{src: string}> = (props) => {
       player.addEventListener('timeupdate', onUpdateTime)
       player.addEventListener('seeking', onUpdateTime)
       player.addEventListener('progress', onProgress)
+      player.addEventListener('ended', onPlayerEnd)
       return () => {
         player.removeEventListener('loadedmetadata', onMetaLoaded)
         player.removeEventListener('loadeddata', onLoadedData)
         player.removeEventListener('timeupdate', onUpdateTime)
         player.removeEventListener('seeking', onUpdateTime)
         player.removeEventListener('progress', onProgress)
+        player.removeEventListener('ended', onPlayerEnd)
       }
     }
   }, [])
